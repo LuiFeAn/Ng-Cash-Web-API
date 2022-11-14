@@ -1,0 +1,11 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "Projeto criado para o teste técnico do processo seletivo da NG ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Luis Fernando",
+  "license": "ISC"
+}
