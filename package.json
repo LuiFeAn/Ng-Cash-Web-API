@@ -4,7 +4,7 @@
   "description": "Projeto criado para o teste técnico do processo seletivo da NG ",
   "main": "index.js",
   "scripts": {
-    "start":"node build/index.js",
+    "start": "node build/index.js",
     "dev": "nodemon -e ts,json src/index.ts",
     "build": "tsc"
   },
@@ -15,14 +15,15 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
-    "postgres": "^3.3.1"
+    "pg": "^8.8.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.10"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.14",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.11.9",
-    "@types/sequelize": "^4.28.14",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1"
   }
