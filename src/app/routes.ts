@@ -1,14 +1,12 @@
 import { Router } from "express";
 
-import userController from "./Controllers/user-controller";
-import accountController from "./Controllers/account-controller";
-import transactionController from "./Controllers/transaction-controller";
+import userController from "./controllers/user-controller";
+import accountController from "./controllers/account-controller";
+import transactionController from "./controllers/transaction-controller";
 
 const router = Router();
 
-
-router.get('/users',userController.show);
-router.post('/users');
+router.post('/users',userController.store);
 
 
 export default router;
