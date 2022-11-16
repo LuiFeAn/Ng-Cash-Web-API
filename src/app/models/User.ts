@@ -23,14 +23,13 @@ class User {
     @BeforeUpdate()
     async addHashAndFkAccount(){
 
-        //Sua senha é haseada pelo bcrypt
         this.password = hashSync(this.password,10);
-        //É criado um novo registro na tabela accounts com um balance de 100R$
+
         const accountRepository = AppDataSource.getRepository(Account);
         const balance = accountRepository.create({ balance: 100.000});
-        //Salva o retorno do novo registro criado
+
         const newAccount = await accountRepository.save(balance);
-        //O usuário criado recebe a FK deste novo registro
+
         const { id: fkAccountId } = newAccount;
         this.accountId = fkAccountId;
 

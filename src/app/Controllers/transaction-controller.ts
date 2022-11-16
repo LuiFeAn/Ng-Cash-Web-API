@@ -38,13 +38,13 @@ class TransactionController {
 
         if(fromUserAccount?.balance && fromUserAccount.balance < value){
             return response.status(401).json({
-                error: 'Você não possui saldo o suficiente para realizar essa transação '}
+                error: 'Você não possui saldo o suficiente para realizar essa transação'}
             );
         }
 
         if(username === toUser)
         return response.status(401).json( {
-            error: 'Você não pode realizar uma transação para si mesmo '
+            error: 'Você não pode realizar uma transação para si mesmo'
         } );
 
         const userRepository = AppDataSource.getRepository(User);
@@ -52,17 +52,18 @@ class TransactionController {
         const toUserTransaction = await userRepository.findOne({ where: { username: toUser}});
         if(!toUserTransaction)
         return response.status(404).json({
-             error: 'Usuário não existente !'
+             error: 'Não conseguimos encontrar este usuário'
         });
 
-        //Debitar da conta do usuário que realizou a requisição
-        const debitRequestUser = fromUserAccount?.balance ? fromUserAccount.balance - value : null;
+        accountRepository.update(fromUserAccount?.id as string, {
+            balance:Number(fromUserAccount?.balance ? fromUserAccount.balance - value : null)
+        });
 
-        //Creditar na conta do usuário que foi efetuada a transação
         const toUserAccount = await accountRepository.findOne({ where: { id: toUserTransaction.accountId }});
-        const creditTransactionUser = toUserAccount?.balance ? toUserAccount.balance + value : null;
 
-
+        accountRepository.update(toUserAccount?.id as string,{
+            balance:Number(toUserAccount?.balance ? toUserAccount.balance + value : null)
+        })
 
         const transactionRepository = AppDataSource.getRepository(Transaction);
         const transaction = transactionRepository.create({
@@ -72,12 +73,7 @@ class TransactionController {
         });
         transactionRepository.save(transaction);
 
-        //O usuário que realizou a transação envia o dinheiro para o usuário --tudo deu certo e o usuário ganha mais
-
-
-
-
-        console.log('Ok transação realizada com sucesso !');
+        response.json(transaction);
 
     }
 
