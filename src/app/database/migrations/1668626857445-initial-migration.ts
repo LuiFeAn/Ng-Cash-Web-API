@@ -88,7 +88,7 @@ export class initialMigration1668626857445 implements MigrationInterface {
                 },
                 {
                     name:'creditedAt',
-                    type:'time',
+                    type:'timestamp',
                     default:'CURRENT_TIMESTAMP'
                 }
             ],

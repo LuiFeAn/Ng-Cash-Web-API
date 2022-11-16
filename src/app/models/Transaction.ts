@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
+@Entity('transactions')
 class Transaction {
 
     @PrimaryGeneratedColumn('uuid')
@@ -11,10 +12,10 @@ class Transaction {
     @Column('uuid')
     creditedAccountId: string;
 
-    @Column('float')
+    @Column('int')
     value: number;
 
-    @Column('datetime')
+    @Column('timestamp')
     creditedAt:string;
 
 }
