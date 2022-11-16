@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import AppDataSource from "../database";
 
+
 import hasUpper from "../utils/has-upper";
 import hasNumber from "../utils/has-number";
 
 import User from "../models/User";
 
-class UserController {
+class UserController  {
+
 
     async store(request: Request, response: Response){
 

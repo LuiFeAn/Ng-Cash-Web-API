@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from 'typeorm';
 import AppDataSource from '../database';
 import { hashSync } from 'bcrypt';
 
@@ -19,8 +19,8 @@ class User {
     @Column('uuid')
     accountId: string;
 
-    //Após a inserção bem sucedida de um novo usuário
     @BeforeInsert()
+    @BeforeUpdate()
     async addHashAndFkAccount(){
 
         //Sua senha é haseada pelo bcrypt

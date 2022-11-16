@@ -2,6 +2,7 @@ import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm
 
 export class initialMigration1668626857445 implements MigrationInterface {
 
+
     public async up(queryRunner: QueryRunner): Promise<void> {
 
         await queryRunner.query(' CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');

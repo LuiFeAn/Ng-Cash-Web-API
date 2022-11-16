@@ -22,7 +22,7 @@ class AuthController  {
         const validPassword = await bcrypt.compare(password, user.password);
         if(!validPassword) return response.status(401).json( {error: 'Email ou senha inválido(s)' });
 
-        const token = jwt.sign({ id: user.id, username:user.username},secret,{
+        const token = jwt.sign({ id: user.id, username:user.username, accountId: user.accountId},secret,{
             expiresIn:'1d'
         });
 
