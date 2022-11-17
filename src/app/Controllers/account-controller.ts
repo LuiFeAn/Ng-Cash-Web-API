@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { CustomRequest } from "../middlewares/jwt-verification";
 import TokenPayload from "../@types/token-payload";
 
-import Account from "../models/Account";
+import Account from "../repositories/account-repository";
 import AppDataSource from "../database";
 
 class AccountController {

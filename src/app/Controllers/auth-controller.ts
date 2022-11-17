@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import bcrypt from 'bcrypt';
-import User from '../models/User';
+import User from '../repositories/user-repository';
 
 const secret = (process.env.JWT_SECRET as string);
 

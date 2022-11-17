@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } fr
 import AppDataSource from '../database';
 import { hashSync } from 'bcrypt';
 
-import Account from './Account';
+import Account from './account-repository';
 
 @Entity('users')
 class User {

@@ -5,7 +5,7 @@ import AppDataSource from "../database";
 import hasUpper from "../utils/has-upper";
 import hasNumber from "../utils/has-number";
 
-import User from "../models/User";
+import User from "../repositories/user-repository";
 
 class UserController  {
 

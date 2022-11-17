@@ -15,6 +15,7 @@ router.post('/users',userController.store);
 
 router.get('/accounts',verifyJwt,accountController.show);
 
+router.get('/transactions',verifyJwt,transactionController.show);
 router.post('/transactions',verifyJwt,transactionController.create);
 
 
