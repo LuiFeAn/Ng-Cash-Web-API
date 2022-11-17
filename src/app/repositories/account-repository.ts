@@ -6,7 +6,7 @@ class Account {
     @PrimaryGeneratedColumn('uuid')
     id:string;
 
-    @Column('varchar')
+    @Column('float')
     balance:number;
 
 }
