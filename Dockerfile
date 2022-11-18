@@ -6,5 +6,5 @@ COPY . /server
 
 RUN npm install
 
-CMD [ "npm", "run", "docker" ]
+CMD [ "npm", "run", "deploy" ]
 
