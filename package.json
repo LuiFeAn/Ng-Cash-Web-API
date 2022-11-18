@@ -9,6 +9,7 @@
     "typeorm": "npx typeorm-ts-node-commonjs",
     "typeorm:migrate": "npm run typeorm -- -d ./src/app/database/index.ts migration:run",
     "typeorm:drop": "npm run typeorm -- -d ./src/app/database/index.ts migration:drop",
+    "test":"npm run typeorm:migrate && npm run build && npm run start",
     "build": "tsc"
   },
   "author": "Luis Fernando",
