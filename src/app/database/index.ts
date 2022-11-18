@@ -12,7 +12,7 @@ const AppDataSource = new DataSource({
     password: process.env.BD_PASSWORD as string,
     database: process.env.BD_NAME as string,
     entities: [
-        `${path.join(__dirname,'../models/*')}`
+        `${path.join(__dirname,'../repositories/*')}`
     ],
     migrations: [
         `${path.join(__dirname,'migrations/*')}`
