@@ -17,6 +17,6 @@ app.use(cors());
 app.use(routes);
 app.use(serverError);
 
-app.listen(process.env.API_PORT || 3001, () => (
-    console.log(` Server Started At ${process.env.API_PORT} 🔥👨‍💻`)
+app.listen( 3001, () => (
+    console.log(` Server Started At 3001 🔥👨‍💻`)
 ));

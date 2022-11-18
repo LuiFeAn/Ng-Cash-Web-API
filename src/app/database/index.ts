@@ -10,7 +10,7 @@ const AppDataSource = new DataSource({
     port: 5432,
     username: "root",
     password: "root",
-    database: "ng_cash_bd",
+    database: "ng_cash_db",
     entities: [
         `${path.join(__dirname,'../repositories/*')}`
     ],
