@@ -6,11 +6,11 @@ dotenv.config();
 const AppDataSource = new DataSource({
 
     type: "postgres",
-    host: process.env.BD_HOST as string,
-    port: process.env.BD_PORT as undefined,
-    username: process.env.BD_USER as string,
-    password: process.env.BD_PASSWORD as string,
-    database: process.env.BD_NAME as string,
+    host: "172.17.0.1",
+    port: 5432,
+    username: "root",
+    password: "root",
+    database: "ng_cash_db",
     entities: [
         `${path.join(__dirname,'../repositories/*')}`
     ],

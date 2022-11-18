@@ -26,7 +26,7 @@ class AuthController  {
             id: user.id,
             username:user.username,
             accountId: user.accountId
-        },secret,{
+        },"ITSASECRETPASSWORD",{
             expiresIn:'1d'
         });
 
