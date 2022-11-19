@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { Between } from "typeorm";
 
 import TransactionBody from "../@types/transaction-body";
+import { Between } from "typeorm";
 
 import User from "../repositories/user-repository";
 import Account from "../repositories/account-repository";
@@ -23,57 +23,77 @@ class TransactionController {
         const { token } = ( request as CustomRequest );
         const { accountId } = (token as TokenPayload);
 
+        let transactions: Transaction[] = [];
+
+        let credited: Transaction[] = [];
+        let debited: Transaction[] = [];
+
         const repository = AppDataSource.getRepository(Transaction);
 
+        if(!date && !debit && !credit){
 
-        if(debit && !credit && date){
-            repository.createQueryBuilder('')
-            const transactions = await repository.find({where:{
-                debitedAccountId:accountId,
-                creditedAt: date
-            }});
-            return response.json(transactions);
-        }
-
-        if(credit && !debit && date){
-            const transactions = await repository.find({where:{
-                creditedAccountId:accountId,
-                creditedAt: date
-            }});
-            return response.json(transactions);
-        }
-
-        if(debit && !credit && !date){
-            const transactions = await repository.find({where:{
-                debitedAccountId:accountId
-            }});
-            return response.json(transactions);
-        }
-
-        if(credit && !debit && !date){
-            const transactions = await repository.find({where:{
+            credited = await repository.find({where:{
                 creditedAccountId:accountId
             }});
+
+            debited = await repository.find({where:{
+                debitedAccountId:accountId
+            }});
+
+            transactions = [...credited,...debited].reverse();
             return response.json(transactions);
+
+
         }
 
         if(date && !debit && !credit){
-            const transactions = await repository.find({where:{
-                creditedAt:date
-            }});
+
+            credited = await repository.createQueryBuilder('').
+            where('Transaction.debitedAccountId = :accountId',{ accountId }).
+            andWhere(`DATE_TRUNC('day', Transaction.creditedAt) = :search_date`,{ search_date: date }).getMany();
+
+
+            debited = await repository.createQueryBuilder('').
+            where('Transaction.creditedAccountId = :accountId',{ accountId }).
+            andWhere(`DATE_TRUNC('day', Transaction.creditedAt) = :search_date`,{ search_date: date }).getMany();
+
+            transactions = [...credited,...debited].reverse();
             return response.json(transactions);
         }
 
-        if(!date && !debit && !credit){
-            const credited = await repository.find({where:{
-                creditedAccountId:accountId
-            }});
-            const debited = await repository.find({where:{
+        if(debit && !credit && date){
+
+            transactions = await repository.createQueryBuilder('').
+            where('Transaction.debitedAccountId = :accountId',{ accountId }).
+            andWhere(`DATE_TRUNC('day', Transaction.creditedAt) = :search_date`,{ search_date: date }).getMany();
+            return response.json(transactions);
+
+        }
+
+        if(credit && !debit && date){
+
+            transactions = await repository.createQueryBuilder('').
+            where('Transaction.creditedAccountId = :accountId',{ accountId }).
+            andWhere(`DATE_TRUNC('day', Transaction.creditedAt) = :search_date`,{ search_date: date }).getMany();
+
+        }
+
+        if(debit && !credit && !date){
+
+            transactions = await repository.find({where:{
                 debitedAccountId:accountId
             }});
+            return response.json(transactions);
 
-            const allTransactions = [...credited,...debited];
-            return response.json(allTransactions);
+        }
+
+        if(credit && !debit && !date){
+
+            transactions = await repository.find({where:{
+                creditedAccountId:accountId
+            }});
+            return response.json(transactions);
+
         }
 
 

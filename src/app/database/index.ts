@@ -6,7 +6,7 @@ dotenv.config();
 const AppDataSource = new DataSource({
 
     type: "postgres",
-    host: "172.17.0.1",
+    host: "localhost",
     port: 5432,
     username: "root",
     password: "root",
