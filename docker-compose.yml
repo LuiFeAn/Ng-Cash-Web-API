@@ -7,9 +7,9 @@ services:
         container_name: NG_CASH_API
         restart: always
         expose:
-            - 3001
+            - ${API_PORT}
         ports:
-            - "${API_PORT}:3001"
+            - "${API_PORT}:${API_PORT}"
         depends_on:
             - db
         environment:
