@@ -75,6 +75,7 @@ class TransactionController {
             transactions = await repository.createQueryBuilder('').
             where('Transaction.creditedAccountId = :accountId',{ accountId }).
             andWhere(`DATE_TRUNC('day', Transaction.creditedAt) = :search_date`,{ search_date: date }).getMany();
+            return response.json(transactions);
 
         }
 

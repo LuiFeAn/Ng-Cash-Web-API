@@ -8,7 +8,7 @@
     "dev": "nodemon -e ts,json src/index.ts",
     "typeorm": "npx typeorm-ts-node-commonjs",
     "typeorm:migrate": "npm run typeorm -- -d ./src/app/database/index.ts migration:run",
-    "typeorm:drop": "npm run typeorm -- -d ./src/app/database/index.ts migration:drop",
+    "typeorm:revert": "npm run typeorm migration:revert -- -d ./src/app/database/index.ts",
     "deploy":"npm run typeorm:migrate && npm run build && npm run start",
     "build": "tsc"
   },

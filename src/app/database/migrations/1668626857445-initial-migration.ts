@@ -111,6 +111,11 @@ export class initialMigration1668626857445 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+
+        await queryRunner.dropTable('users');;
+        await queryRunner.dropTable('transactions');
+        await queryRunner.dropTable('accounts');
+        await queryRunner.query(' DROP EXTENSION "uuid-ossp"');
     }
 
 }
