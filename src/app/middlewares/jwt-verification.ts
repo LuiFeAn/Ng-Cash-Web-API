@@ -14,7 +14,7 @@ export function verifyJwt(request: Request, response: Response, next: NextFuncti
 
     if(!token) return response.status(401).json( { error: 'Não autorizado'});
 
-    const decodedToken = jwt.verify(token,"ITSASECRETPASSWORD");
+    const decodedToken = jwt.verify(token,process.env.JWT_SECRET);
 
     (request as CustomRequest).token = decodedToken;
 

@@ -23,7 +23,7 @@ class AuthController  {
             id: user.id,
             username:user.username,
             accountId: user.accountId
-        },"ITSASECRETPASSWORD",{
+        },process.env.JWT_SECRET,{
             expiresIn:'1d'
         });
 
