@@ -8,7 +8,7 @@ import AppDataSource from "../database";
 
 class AccountController {
 
-    async show(request:Request, response: Response){
+    async session(request:Request, response: Response){
 
         const { token } = (request as CustomRequest);
         const { accountId } = (token as TokenPayload);

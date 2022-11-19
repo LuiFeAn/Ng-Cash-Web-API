@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-
 import TransactionBody from "../@types/transaction-body";
-import { Between } from "typeorm";
 
 import User from "../repositories/user-repository";
 import Account from "../repositories/account-repository";
@@ -16,7 +14,7 @@ import TransactionQueryProps from "../@types/transaction-query";
 class TransactionController {
 
 
-    async show(request: Request, response: Response){
+    async session(request: Request, response: Response){
 
         const { date, debit, credit } = ( request.query as TransactionQueryProps );
 
@@ -100,7 +98,7 @@ class TransactionController {
 
     }
 
-    async create(request: Request, response: Response){
+    async store(request: Request, response: Response){
 
         const { token } = ( request as CustomRequest );
         const { accountId, username } = (token as TokenPayload);

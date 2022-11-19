@@ -7,8 +7,6 @@ dotenv.config();
 import bcrypt from 'bcrypt';
 import User from '../repositories/user-repository';
 
-const secret = (process.env.JWT_SECRET as string);
-
 class AuthController  {
 
     async authenticate(request: Request, response: Response){

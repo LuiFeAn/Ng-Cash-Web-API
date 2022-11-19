@@ -13,10 +13,10 @@ router.post('/authentication',authController.authenticate);
 
 router.post('/users',userController.store);
 
-router.get('/accounts',verifyJwt,accountController.show);
+router.get('/accounts',verifyJwt,accountController.session);
 
-router.get('/transactions',verifyJwt,transactionController.show);
-router.post('/transactions',verifyJwt,transactionController.create);
+router.get('/transactions',verifyJwt,transactionController.session);
+router.post('/transactions',verifyJwt,transactionController.store);
 
 
 export default router;
