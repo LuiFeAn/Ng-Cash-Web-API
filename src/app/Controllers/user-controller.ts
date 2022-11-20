@@ -51,7 +51,11 @@ class UserController  {
              error: 'Nome de usuário já existente '
         });
 
-        const user = repository.create({ username, password});
+        const user = repository.create({
+            username: username.trim(),
+            password
+        });
+
         await repository.save(user);
 
 
