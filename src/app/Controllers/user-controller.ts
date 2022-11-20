@@ -16,13 +16,15 @@ class UserController  {
 
         const repository = AppDataSource.getRepository(User);
 
-        if(username.length < 3)
-        return response.status(404).json({ error: 'Seu nome deve possuir ao menos 3 (três) caracteres !'});
+        if(!username || username.length < 3)
+        return response.status(404).json({
+            error: 'Seu nome deve possuir ao menos 3 (três) caracteres !'
+        });
 
         const passwordErrorsFound = [];
 
-        if(password.length < 8) passwordErrorsFound.push({
-            reason:'Sua senha deve possuir, no mínimo, 8 caracteres'
+        if(!password || password.length < 8) passwordErrorsFound.push({
+            reason:'Sua senha deve possuir, no mínimo, 8 (oito) caracteres'
         });
 
         const verifyIfHasUpper = hasUpper(password);
@@ -36,11 +38,18 @@ class UserController  {
         });
 
         if(passwordErrorsFound.length > 0)
-        return response.status(404).json({ error: passwordErrorsFound });
+        return response.status(404).json({
+            error: passwordErrorsFound
+        });
 
-        const userExists = await repository.findOne({ where: { username }});
+        const userExists = await repository.findOne({ where: {
+            username:username.trim()}
+        });
+
         if(userExists)
-        return response.status(409).json({ error: 'Nome de usuário já existente '});
+        return response.status(409).json({
+             error: 'Nome de usuário já existente '
+        });
 
         const user = repository.create({ username, password});
         await repository.save(user);

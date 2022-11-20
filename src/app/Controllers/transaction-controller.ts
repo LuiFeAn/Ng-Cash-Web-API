@@ -116,10 +116,14 @@ class TransactionController {
         });
 
         if(transactionErrors.length > 0)
-        return response.status(404).json( {error: transactionErrors} );
+        return response.status(404).json( {
+            error: transactionErrors
+        } );
 
         const accountRepository = AppDataSource.getRepository(Account);
-        const fromUserAccount = await accountRepository.findOne({where:{ id: accountId}});
+        const fromUserAccount = await accountRepository.findOne({where:{
+            id: accountId
+        }});
 
         if(fromUserAccount?.balance && fromUserAccount.balance < value){
             return response.status(401).json({

@@ -17,7 +17,9 @@ class AuthController  {
         const user = await repository.findOne({ where: { username }});
 
         const validPassword = user ? await bcrypt.compare(password, user.password) : undefined;
-        if(!validPassword) return response.status(401).json( {error: 'Email ou senha inválido(s)' });
+        if(!validPassword) return response.status(401).json( {
+            error: 'Email ou senha inválido(s)'
+        });
 
         const token = jwt.sign({
             id: user.id,
