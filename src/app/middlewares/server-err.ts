@@ -1,8 +1,14 @@
-import { Request, ErrorRequestHandler , Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 
-function serverError(error: ErrorRequestHandler, request: Request, response: Response, next: NextFunction) {
+function serverError(error: any, request: Request, response: Response, next: NextFunction) {
 
-    response.status(500).json({ error: 'Um erro interno ocorreu. Tente novamente mais tarde'});
+   if(error){
+        return response.status(500).json({
+            error: 'Um erro interno ocorreu. Tente novamente mais tarde'
+        });
+   }
+
+   next();
 
 }
 
