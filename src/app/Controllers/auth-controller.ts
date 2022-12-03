@@ -14,9 +14,10 @@ class AuthController  {
         const { username, password } = request.body;
         const repository = AppDataSource.getRepository(User);
 
-        const user = await repository.findOne({ where: { username }});
+        const user = await repository.findOneBy({ username });
 
         const validPassword = user ? await bcrypt.compare(password, user.password) : undefined;
+
         if(!validPassword) return response.status(401).json( {
             error: 'Email ou senha inválido(s)'
         });
@@ -29,7 +30,10 @@ class AuthController  {
             expiresIn:'1d'
         });
 
-        return response.status(200).json({user,token});
+       response.json({
+        token,
+        user
+       });
 
     }
 
