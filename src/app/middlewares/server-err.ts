@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 
-import IAppError from "../interfaces/app-error";
+import AppErr from "../errors/AppErr";
 
-function serverError(error: IAppError, request: Request, response: Response, next: NextFunction) {
+function serverError(error: AppErr, request: Request, response: Response, next: NextFunction) {
+
    if(error){
         return response.status( error.statusCode || 500) .json({
-            error: error.error || 'Um erro interno ocorreu. Tente novamente mais tarde'
+            error: error.message || 'Um erro interno ocorreu. Tente novamente mais tarde'
         });
    }
 

@@ -2,8 +2,6 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 
-import IJwtSign from '../interfaces/jwt-sign';
-
 dotenv.config();
 
 export interface CustomRequest extends Request {

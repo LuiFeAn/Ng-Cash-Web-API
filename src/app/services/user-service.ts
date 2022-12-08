@@ -21,7 +21,7 @@ class UserService {
             username:username.trim()}
         });
 
-        if(userExists) return new AppErr({
+        if(userExists) throw new AppErr({
             statusCode:401,
             error:'Nome de usuário já existente'
         })

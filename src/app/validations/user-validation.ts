@@ -11,7 +11,7 @@ export default {
         check('username').not().isEmpty().withMessage('Username é obrigatório').trim()
         .isLength({ min: 3}).withMessage('Seu nome deve possuir ao menos 3 (três) caracteres !').trim(),
 
-        check('password').not().isEmpty().withMessage('Passsword é obrigatório').
+        check('password').not().isEmpty().withMessage('Password é obrigatório').
         isLength({ min: 8}).withMessage('Sua senha deve possuir, no mínimo, 8 (oito) caracteres')
         .custom( password => {
 
@@ -20,6 +20,8 @@ export default {
                 throw new Error('Sua senha deve possuir uma letra maiúscula');
             }
 
+            return true;
+
         }).
         custom( password => {
 
@@ -27,6 +29,8 @@ export default {
             if(!verifyIfHasNumber) {
                throw new Error('Sua senha deve possuir um número');
             }
+
+            return true;
 
         }),
         expressValidatorResult,
