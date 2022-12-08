@@ -17,6 +17,4 @@ app.use(cors());
 app.use(routes);
 app.use(serverError);
 
-app.listen( process.env.API_PORT, () => (
-    console.log(` Server Started At ${process.env.API_PORT} 🔥👨‍💻`)
-));
+export { app }

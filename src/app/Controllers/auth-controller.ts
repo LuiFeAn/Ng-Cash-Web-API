@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import bcrypt from 'bcrypt';
-import User from '../repositories/user-repository';
+import User from '../models/User';
 
 class AuthController  {
 

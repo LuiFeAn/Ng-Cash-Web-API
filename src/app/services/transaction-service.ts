@@ -1,8 +1,8 @@
 import AppDataSource from "../database";
 
-import Transaction from "../repositories/transaction-repository";
-import User from "../repositories/user-repository";
-import Account from "../repositories/account-repository";
+import Transaction from "../models/Transaction";
+import User from "../models/User";
+import Account from "../models/Account";
 import AppErr from "../errors/AppErr";
 
 type TransactionProps = {
@@ -11,6 +11,7 @@ type TransactionProps = {
     value: number;
     username: string;
     accountId: string;
+
 }
 
 class TransactionService {
@@ -22,7 +23,7 @@ class TransactionService {
 
     }
 
-    async makeTransaction({toUser, value, accountId, username}: TransactionProps): Promise< AppErr | void >{
+    async makeTransaction({toUser, value, accountId, username}: TransactionProps): Promise<AppErr | void >{
 
         const accountRepository = AppDataSource.getRepository(Account);
 
@@ -30,7 +31,7 @@ class TransactionService {
             id: accountId
         });
 
-        if(fromUserAccount?.balance && fromUserAccount.balance < value){
+        if(fromUserAccount.balance && fromUserAccount.balance < value){
             throw new AppErr({
                 statusCode:401,
                 error:'Você não possui saldo o suficiente para realizar essa transação'
@@ -57,26 +58,28 @@ class TransactionService {
             })
         }
 
-        accountRepository.update(fromUserAccount?.id as string, {
-            balance:Number(fromUserAccount?.balance ? fromUserAccount.balance - value : null)
+        accountRepository.update(fromUserAccount.id, {
+            balance:Number(fromUserAccount.balance - value),
         });
 
         const toUserAccount = await accountRepository.findOneBy({
             id: toUserTransaction.accountId
         });
 
-        accountRepository.update(toUserAccount?.id as string,{
-            balance:Number(toUserAccount?.balance ? toUserAccount.balance + value : null)
+        accountRepository.update(toUserAccount.id,{
+            balance:Number(toUserAccount.balance + value),
         })
 
         const transactionRepository = AppDataSource.getRepository(Transaction);
+
         const transaction = transactionRepository.create({
-            debitedAccountId:fromUserAccount?.id,
-            creditedAccountId:toUserAccount?.id,
+            debitedAccountId:fromUserAccount.id,
+            creditedAccountId:toUserAccount.id,
             value
         });
 
         transactionRepository.save(transaction);
+
 
     }
 

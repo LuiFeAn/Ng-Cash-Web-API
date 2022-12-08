@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } fr
 import AppDataSource from '../database';
 import { hashSync } from 'bcrypt';
 
-import Account from './account-repository';
+import Account from './Account';
 
 @Entity('users')
 class User {
@@ -26,11 +26,13 @@ class User {
         this.password = hashSync(this.password,10);
 
         const accountRepository = AppDataSource.getRepository(Account);
+
         const balance = accountRepository.create({ balance: 100.000});
 
         const newAccount = await accountRepository.save(balance);
 
         const { id: fkAccountId } = newAccount;
+
         this.accountId = fkAccountId;
 
     }

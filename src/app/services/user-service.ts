@@ -1,6 +1,6 @@
 import AppDataSource from "../database";
 
-import User from "../repositories/user-repository";
+import User from "../models/User";
 import AppErr from "../errors/AppErr";
 
 type UserProps = {
@@ -21,7 +21,7 @@ class UserService {
             username:username.trim()}
         });
 
-        if(userExists) throw new AppErr({
+        if(userExists) return new AppErr({
             statusCode:401,
             error:'Nome de usuário já existente'
         })

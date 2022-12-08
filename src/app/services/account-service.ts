@@ -1,6 +1,6 @@
 import AppDataSource from '../database/index';
 
-import Account from '../repositories/account-repository';
+import Account from '../models/Account';
 
 class AccountService {
 

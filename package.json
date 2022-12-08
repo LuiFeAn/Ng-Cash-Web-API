@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node build/index.js",
-    "dev": "nodemon -e ts,json src/index.ts",
+    "dev": "nodemon -e ts,json src/server.ts",
     "typeorm": "npx typeorm-ts-node-commonjs",
     "typeorm:migrate": "npm run typeorm -- -d ./src/app/database/index.ts migration:run",
     "typeorm:revert": "npm run typeorm migration:revert -- -d ./src/app/database/index.ts",

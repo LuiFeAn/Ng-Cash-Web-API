@@ -21,7 +21,6 @@ router.post('/authentication',authController.authenticate);
 router.post(
     '/users',
     userDto.post,
-    userController.store
 );
 
 router.get('/accounts',verifyJwt,accountController.session);
