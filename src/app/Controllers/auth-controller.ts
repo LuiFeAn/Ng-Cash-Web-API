@@ -7,6 +7,9 @@ dotenv.config();
 import bcrypt from 'bcrypt';
 import User from '../models/User';
 
+import AppErr from '../errors/AppErr';
+
+
 class AuthController  {
 
     async authenticate(request: Request, response: Response){
@@ -18,9 +21,12 @@ class AuthController  {
 
         const validPassword = user ? await bcrypt.compare(password, user.password) : undefined;
 
-        if(!validPassword) return response.status(401).json( {
-            error: 'Email ou senha inválido(s)'
-        });
+        if(!validPassword){
+            throw new AppErr({
+                statusCode:400,
+                error:'Email ou senha inválido(s)'
+            });
+        }
 
         const token = jwt.sign({
             id: user.id,

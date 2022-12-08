@@ -14,10 +14,7 @@ class UserController  {
             password
         });
 
-        response.json({
-            sucess:'Usuário cadastrado com sucesso'
-        });
-
+        response.sendStatus(200);
 
     }
 

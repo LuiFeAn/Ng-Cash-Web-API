@@ -19,7 +19,17 @@ class TransactionService {
     async getTransactionsByTokenId(id: string): Promise< Transaction[] >{
 
         const repository = AppDataSource.getRepository(Transaction);
-        return await repository.findBy({ id });
+        return await repository.find({
+            where:[
+                {
+                    debitedAccountId: id,
+                },
+                {
+                    creditedAccountId: id,
+                }
+            ]
+
+        });
 
     }
 

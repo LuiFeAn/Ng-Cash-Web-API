@@ -32,7 +32,7 @@ export default {
 
             return true;
 
-        }),
+        }).trim(),
         expressValidatorResult,
     ]
 }
