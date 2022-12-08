@@ -17,8 +17,8 @@ class UserService {
 
         const repository = AppDataSource.getRepository(User);
 
-        const userExists = await repository.findOne({ where: {
-            username:username.trim()}
+        const userExists = await repository.findBy({
+            username
         });
 
         if(userExists) throw new AppErr({
@@ -27,7 +27,7 @@ class UserService {
         })
 
         const user = repository.create({
-            username: username.trim(),
+            username,
             password
         });
 

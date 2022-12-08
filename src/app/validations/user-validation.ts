@@ -1,5 +1,5 @@
 import { check } from 'express-validator';
-import expressValidatorResult from '../services/express-validations';
+import expressValidatorResult from '../middlewares/express-validations';
 
 import hasUpper from '../utils/has-upper';
 import hasNumber from '../utils/has-number';
