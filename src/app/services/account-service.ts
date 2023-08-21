@@ -1,13 +1,10 @@
-import AppDataSource from '../database/index';
-
-import Account from '../models/Account';
+import { accountRepository } from "../repositories/account-repository";
 
 class AccountService {
 
     async getAccountByTokenId(id: string){
 
-        const repository = AppDataSource.getRepository(Account);
-        return await repository.findOneBy({ id });
+        return accountRepository.findOneBy({ id });
 
     }
 

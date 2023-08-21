@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import bcrypt from 'bcrypt';
-import User from '../models/User';
+import User from '../entities/User';
 
 import AppErr from '../errors/AppErr';
 

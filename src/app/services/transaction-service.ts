@@ -1,25 +1,15 @@
-import AppDataSource from "../database";
-
-import Transaction from "../models/Transaction";
-import User from "../models/User";
-import Account from "../models/Account";
+import { transactionRepository } from '../repositories/transaction-repository';
+import { userRepository } from '../repositories/user-repository';
+import { accountRepository } from '../repositories/account-repository';
+import { IMakeTransaction } from '../interfaces/ITransactions';
 import AppErr from "../errors/AppErr";
 
-type TransactionProps = {
-
-    toUser: string;
-    value: number;
-    username: string;
-    accountId: string;
-
-}
 
 class TransactionService {
 
-    async getTransactionsByTokenId(id: string): Promise< Transaction[] >{
+    async getTransactionsByTokenId(id: string){
 
-        const repository = AppDataSource.getRepository(Transaction);
-        return await repository.find({
+        return transactionRepository.find({
             where:[
                 {
                     debitedAccountId: id,
@@ -33,9 +23,7 @@ class TransactionService {
 
     }
 
-    async makeTransaction({toUser, value, accountId, username}: TransactionProps): Promise<AppErr | void >{
-
-        const accountRepository = AppDataSource.getRepository(Account);
+    async makeTransaction({toUser, value, accountId, username}: IMakeTransaction){
 
         const fromUserAccount = await accountRepository.findOneBy({
             id: accountId
@@ -54,8 +42,6 @@ class TransactionService {
                 error:'Você não pode realizar uma transação para si mesmo'
             })
         }
-
-        const userRepository = AppDataSource.getRepository(User);
 
         const toUserTransaction = await userRepository.findOneBy({
             username: toUser
@@ -78,9 +64,7 @@ class TransactionService {
 
         accountRepository.update(toUserAccount.id,{
             balance:Number(toUserAccount.balance + value),
-        })
-
-        const transactionRepository = AppDataSource.getRepository(Transaction);
+        });
 
         const transaction = transactionRepository.create({
             debitedAccountId:fromUserAccount.id,

@@ -1,6 +1,6 @@
 import AppDataSource from "../database";
 
-import User from "../models/User";
+import User from "../entities/User";
 import AppErr from "../errors/AppErr";
 
 type UserProps = {
