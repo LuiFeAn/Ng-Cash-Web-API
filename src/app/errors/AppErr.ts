@@ -2,12 +2,13 @@ import IAppError from "../interfaces/app-error";
 
 class AppErr extends Error {
 
-    public statusCode: number
+    statusCode
+    errors
 
-    constructor({statusCode,error}: IAppError){
+    constructor({statusCode,errors}: IAppError){
         super()
         this.statusCode = statusCode
-        this.message = error
+        this.errors = errors;
     }
 
 }

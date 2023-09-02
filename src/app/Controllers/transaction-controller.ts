@@ -2,31 +2,21 @@ import { Request, Response } from "express";
 
 import transactionService from "../services/transaction-service";
 
-import { CustomRequest } from "../middlewares/jwt-verification";
 import TokenPayload from "../@types/token-payload";
-
 
 class TransactionController {
 
+    async index(request: Request, response:Response){
 
-    async session(request: Request, response: Response){
+        const transactions = await transactionService.getTransactionsByTokenId(request.authUser.accountId);
 
-
-        const { token } =  request as CustomRequest;
-        const { accountId } = token as TokenPayload;
-
-        const service = await transactionService.getTransactionsByTokenId(accountId);
-
-        response.json(service);
-
+        response.json(transactions);
 
     }
 
     async store(request: Request, response: Response){
 
-        const { token } = request as CustomRequest;
-
-        const { accountId, username } = token as TokenPayload;
+        const { accountId, username } = request.authUser;
 
         const { toUser, value } = request.body;
 

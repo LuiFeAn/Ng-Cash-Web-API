@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn } from 'typeorm';
+
 import Account from './Account';
 
 @Entity('transactions')
@@ -17,11 +18,11 @@ class Transaction {
     value: number;
 
     @Column('timestamp')
+    @CreateDateColumn()
     creditedAt:string;
 
     @OneToMany( () => Account, account => account.transactions )
-    @JoinColumn()
-    account: Account[]
+    account: Account
 
 }
 

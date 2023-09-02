@@ -1,18 +1,14 @@
 import { Request, Response } from "express";
 
-import userService from "../services/user-service";
+import { UserService } from "../services/user-service";
 
-class UserController  {
+export class UserController  {
 
+    constructor(private readonly userService: UserService){}
 
     async store(request: Request, response: Response){
 
-        const { username, password } = request.body;
-
-        await userService.createNewUser({
-            username,
-            password
-        });
+        await this.userService.create({...request.body});
 
         response.sendStatus(200);
 
@@ -20,4 +16,3 @@ class UserController  {
 
 }
 
-export default new UserController();

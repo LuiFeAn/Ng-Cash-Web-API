@@ -1,7 +1,8 @@
 interface IAppError {
 
-    statusCode: number,
-    error: string;
+    statusCode: number;
+
+    errors: string []
 
 }
 

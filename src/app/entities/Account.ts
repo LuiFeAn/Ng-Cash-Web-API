@@ -8,7 +8,9 @@ class Account {
     @PrimaryGeneratedColumn('uuid')
     id:string;
 
-    @Column('float')
+    @Column('float',{
+        default:100.000
+    })
     balance:number;
 
     @OneToOne( () => User, user => user.account )

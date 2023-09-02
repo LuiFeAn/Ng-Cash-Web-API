@@ -1,16 +1,24 @@
 {
   "compilerOptions": {
-  
-    "target": "es2016",                                 
-    "experimentalDecorators": true,                   /* Enable experimental support for TC39 stage 2 draft decorators. */
-    "module": "commonjs",                                /* Specify what module code is generated. */
-    "rootDir": "./src",                                  /* Specify the root folder within your source files. */
-    "moduleResolution": "node",                       /* Specify how TypeScript looks up a file from a given module specifier. */                 /* Specify a file that bundles all outputs into one JavaScript file. If 'declaration' is true, also designates a file that bundles all .d.ts output. */
-    "outDir": "./build",                                   /* Specify an output folder for all emitted files. */
-    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
-    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
-    "strictNullChecks": false,                         /* When type checking, take into account 'null' and 'undefined'. */
-    "strictPropertyInitialization": false,             /* Check for class properties that are declared but not set in the constructor. */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
+      "target": "es2018",
+      "lib": ["es5", "es6", "ES2018"],
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "allowJs": true,
+      "outDir": "./dist",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "noImplicitAny": true,
+      "typeRoots": ["src/@types", "node_modules/@types"],
+      "strictPropertyInitialization": false
+  },
+  "include": ["src/**/*", "src/app/models/CAD/.ts"],
+  "exclude": ["node_modules", "dist"],
+  "ts-node": {
+      "files": true
   }
 }

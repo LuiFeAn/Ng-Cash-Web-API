@@ -1,39 +1,29 @@
-import AppDataSource from "../database";
+import { Repository } from "typeorm";
 
 import User from "../entities/User";
-import AppErr from "../errors/AppErr";
 
-type UserProps = {
+interface IUserInsert {
 
     username: string;
+
     password: string;
 
 }
 
-class UserService {
+export class UserService {
 
+    constructor(private readonly userRepository: Repository<User>){}
 
-    async createNewUser({username,password}: UserProps): Promise< AppErr | void>{
+    async create({username,password}: IUserInsert){
 
-        const repository = AppDataSource.getRepository(User);
-
-        const userExists = await repository.findBy({
-            username
-        });
-
-        if(userExists) throw new AppErr({
-            statusCode:401,
-            error:'Nome de usuário já existente'
-        })
-
-        const user = repository.create({
+        const user = this.userRepository.create({
             username,
             password
         });
 
-        await repository.save(user);
+        await this.userRepository.save(user);
+
     }
+    
 
 }
-
-export default new UserService();
