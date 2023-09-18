@@ -5,8 +5,8 @@ import userController from "./controllers/user-controller";
 import accountController from "./controllers/account-controller";
 import transactionController from "./controllers/transaction-controller";
 
-import uerDto from "./dtos/user-validation";
-import transactionDto from "./dtos/transaction-validation";
+import uerDto from "./dtos/user-dto";
+import transactionDto from "./dtos/transaction-dto";
 
 import { verifyJwt } from "./middlewares/jwt-verification";
 
@@ -15,8 +15,6 @@ const router = Router();
 router.post('/authentication',authController.authenticate);
 
 router.post('/users',uerDto.post,userController.store);
-
-router.get('/accounts',verifyJwt,accountController.session);
 
 router.get('/transactions',verifyJwt,transactionController.session);
 

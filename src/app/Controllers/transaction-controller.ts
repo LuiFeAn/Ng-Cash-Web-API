@@ -1,36 +1,27 @@
 import { Request, Response } from "express";
 
-import transactionService from "../services/transaction-service";
+import { CreateTransactionDTO } from "../dtos/transaction-dto";
 
-import TokenPayload from "../@types/token-payload";
+import { TransactionService } from "../services/transaction-service";
 
-class TransactionController {
+export class TransactionController {
 
-    async index(request: Request, response:Response){
+    constructor(private readonly transactionService: TransactionService){}
 
-        const transactions = await transactionService.getTransactionsByTokenId(request.authUser.accountId);
+    async show(request: Request, response:Response){
+
+        const transactions = await this.transactionService.findOne(request.authUser.accountId);
 
         response.json(transactions);
 
     }
 
-    async store(request: Request, response: Response){
+    async store(request: Request<{},{},CreateTransactionDTO>, response: Response){
 
-        const { accountId, username } = request.authUser;
-
-        const { toUser, value } = request.body;
-
-        await transactionService.makeTransaction({
-            accountId,
-            username,
-            toUser,
-            value
-        });
+        await this.transactionService.makeTransaction(request.authUser.id,request.body);
 
         response.sendStatus(200);
 
     }
 
 }
-
-export default new TransactionController();

@@ -1,15 +1,23 @@
-import { transactionRepository } from '../repositories/transaction-repository';
-import { userRepository } from '../repositories/user-repository';
-import { accountRepository } from '../repositories/account-repository';
-import { IMakeTransaction } from '../interfaces/ITransactions';
 import AppErr from "../errors/AppErr";
 
+import { CreateTransactionDTO } from '../dtos/transaction-dto';
 
-class TransactionService {
+import { Repository } from 'typeorm';
 
-    async getTransactionsByTokenId(id: string){
+import Transaction from '../entities/Transaction';
 
-        return transactionRepository.find({
+import { AccountService } from './account-service';
+
+export class TransactionService {
+
+    constructor(
+        private readonly transactionRepository: Repository<Transaction>,
+        private readonly accountService: AccountService
+    ){}
+
+    async findOne(id: string){
+
+        return this.transactionRepository.find({
             where:[
                 {
                     debitedAccountId: id,
@@ -23,60 +31,55 @@ class TransactionService {
 
     }
 
-    async makeTransaction({toUser, value, accountId, username}: IMakeTransaction){
+    async makeTransaction(debitedAccountId: string,transactionDto: CreateTransactionDTO){
 
-        const fromUserAccount = await accountRepository.findOneBy({
-            id: accountId
-        });
+        const fromUserAccount = await this.accountService.findOne(debitedAccountId);
 
-        if(fromUserAccount.balance && fromUserAccount.balance < value){
-            throw new AppErr({
-                statusCode:401,
-                error:'Você não possui saldo o suficiente para realizar essa transação'
-            });
+        const toUserAccount = await this.accountService.findOne(transactionDto.credited_account_id);
+
+        const transactionErr: string [] = [];
+
+        const addTransactionError = ( error: string ) => transactionErr.push(error);
+
+        if( fromUserAccount.balance < transactionDto.value ){
+
+            addTransactionError('Você não possui saldo o suficiente para efetuar essa transação');
+
         }
 
-        if(username === toUser){
+        if( transactionDto.credited_account_id === debitedAccountId ){
+
+            addTransactionError('Você não pode realizar uma transação para si mesmo');
+
+        }
+
+        if( transactionErr.length > 0 ){
+
             throw new AppErr({
                 statusCode:401,
-                error:'Você não pode realizar uma transação para si mesmo'
+                errors: transactionErr
             })
+
         }
 
-        const toUserTransaction = await userRepository.findOneBy({
-            username: toUser
+        await this.accountService.partialUpdate(fromUserAccount.id, {
+            balance: fromUserAccount.balance - transactionDto.value,
         });
 
-        if(!toUserTransaction){
-            throw new AppErr({
-                statusCode:401,
-                error:'Não conseguimos encontrar este usuário'
-            })
-        }
-
-        accountRepository.update(fromUserAccount.id, {
-            balance:Number(fromUserAccount.balance - value),
+        await this.accountService.partialUpdate(toUserAccount.id,{
+            balance: toUserAccount.balance + transactionDto.value,
         });
 
-        const toUserAccount = await accountRepository.findOneBy({
-            id: toUserTransaction.accountId
-        });
-
-        accountRepository.update(toUserAccount.id,{
-            balance:Number(toUserAccount.balance + value),
-        });
-
-        const transaction = transactionRepository.create({
+        const transactionInstance = this.transactionRepository.create({
             debitedAccountId:fromUserAccount.id,
             creditedAccountId:toUserAccount.id,
-            value
+            value: transactionDto.value
         });
 
-        transactionRepository.save(transaction);
+        this.transactionRepository.save(transactionInstance);
 
 
     }
 
 }
 
-export default new TransactionService();

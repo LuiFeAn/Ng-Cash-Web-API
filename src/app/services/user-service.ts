@@ -2,26 +2,49 @@ import { Repository } from "typeorm";
 
 import User from "../entities/User";
 
-interface IUserInsert {
+import AppErr from "../errors/AppErr";
 
-    username: string;
-
-    password: string;
-
-}
+import { AccountService } from "./account-service";
 
 export class UserService {
 
-    constructor(private readonly userRepository: Repository<User>){}
+    constructor(
+        private readonly userRepository: Repository<User>,
+        private readonly accountService: AccountService
+    ){}
 
-    async create({username,password}: IUserInsert){
+    async findOne(id: string){
 
-        const user = this.userRepository.create({
+        const user = await this.userRepository.findOneBy({
+            id
+        });
+
+        if( !user ){
+
+            throw new AppErr({
+                statusCode:404,
+                errors:[
+                    'Usuário não encontrado'
+                ]
+            })
+
+        }
+
+        return user;
+
+    }
+
+    async create(username: string, password: string){
+
+        const userInstance = this.userRepository.create({
             username,
             password
         });
 
-        await this.userRepository.save(user);
+        const user = await this.userRepository.save(userInstance);
+
+        await this.accountService.create(user.id);
+        
 
     }
     

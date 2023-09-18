@@ -1,7 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, OneToOne } from 'typeorm';
 
-import { accountRepository } from '../repositories/account-repository';
-
 import { hashSync } from 'bcrypt';
 
 import Account from './Account';
@@ -12,10 +10,10 @@ class User {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column('varchar')
+    @Column('varchar',{ length:'150' })
     username: string;
 
-    @Column('varchar')
+    @Column('varchar',{ length:'36' })
     password: string;
 
     @Column('uuid')
@@ -25,7 +23,7 @@ class User {
     account: Account
 
     @BeforeInsert()
-    async addHashToPassword(){
+    private addHashToPassword(){
         this.password = hashSync(this.password,10);
     }
 

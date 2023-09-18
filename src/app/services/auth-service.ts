@@ -8,22 +8,11 @@ import bcrypt from 'bcrypt';
 
 import AppErr from "../errors/AppErr";
 
-class IAuthenticate{
-
-    username: string
-
-    password: string
-
-}
-
 export class AuthService{
 
     constructor(private readonly userRepository: Repository<User>){}
 
-    async auth({
-        username,
-        password
-    }: IAuthenticate){
+    async auth(username: string, password: string){
 
         const user = await this.userRepository.findOne({
             where:{
@@ -39,7 +28,7 @@ export class AuthService{
         if(!validPassword){
 
             throw new AppErr({
-                statusCode:400,
+                statusCode:401,
                 errors:[
                     'Email ou senha incorreto(s)'
                 ]
@@ -47,20 +36,24 @@ export class AuthService{
             
         }
 
-        const token = jwt.sign(
-        {
-            id: user.id,
-            username:user.username,
-            accountId: user.accountId
-        },
-        process.env.JWT_SECRET,
-        {
-            expiresIn:'1d'
-        });
+        if( user ){
+    
+            const token = jwt.sign(
+            {
+                id: user.id,
+                username:user.username,
+                accountId: user.accountId
+            },
+            process.env.JWT_SECRET as string,
+            {
+                expiresIn:'1d'
+            });
+    
+            return {
+                user,
+                token
+            }
 
-        return {
-            user,
-            token
         }
 
     }

@@ -6,6 +6,8 @@ import AppErr from '../errors/AppErr';
 
 import dotenv from 'dotenv';
 
+import { TokenPayload } from '../interfaces/token-payload';
+
 dotenv.config();
 
 export function verifyJwt(request: Request, response: Response, next: NextFunction) {
@@ -23,11 +25,18 @@ export function verifyJwt(request: Request, response: Response, next: NextFuncti
 
     }
 
-    jwt.verify(token,process.env.JWT_SECRET, (err: any, decode: any) => {
+    jwt.verify(token,process.env.JWT_SECRET, (err: any, decode: TokenPayload) => {
 
-        if(err) return response.status(401).json({
-            error:'Token inválido'
-        });
+        if(err){
+
+            throw new AppErr({
+                statusCode:401,
+                errors:[
+                    'Não autorizado'
+                ]
+            })
+
+        }
 
         request.authUser = decode;
 

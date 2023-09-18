@@ -16,7 +16,7 @@
       "typeRoots": ["src/@types", "node_modules/@types"],
       "strictPropertyInitialization": false
   },
-  "include": ["src/**/*", "src/app/models/CAD/.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"],
   "ts-node": {
       "files": true
