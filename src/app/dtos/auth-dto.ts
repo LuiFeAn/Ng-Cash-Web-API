@@ -10,6 +10,7 @@ export class AuthDTO {
     @IsString({
         message:'Informe uma string'
     })
+    @Transform( (params: TransformFnParams) => params.value.trim() )
     @MaxLength(150,{
         message:'Seu nome de usuário deve possuir no máximo 150 caracteres'
     })
@@ -18,6 +19,7 @@ export class AuthDTO {
     @IsNotEmpty({
         message:'Informe sua senha'
     })
+    @Transform( (params: TransformFnParams) => params.value.trim() )
     @IsString({
         message:'Informe uma string'
     })
