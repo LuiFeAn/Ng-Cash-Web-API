@@ -1,20 +1,16 @@
-import { Repository } from "typeorm";
-
-import User from "../entities/User";
-
 import jwt from 'jsonwebtoken';
 
 import bcrypt from 'bcrypt';
 
 import AppErr from "../errors/AppErr";
 
-export class AuthService{
+import { userRepository } from '../repositories/user-repository';
 
-    constructor(private readonly userRepository: Repository<User>){}
+export class AuthService {
 
     async auth(username: string, password: string){
 
-        const user = await this.userRepository.findOne({
+        const user = await userRepository.findOne({
             where:{
                 username
             },
@@ -59,3 +55,5 @@ export class AuthService{
     }
 
 }
+
+export default new AuthService();

@@ -1,23 +1,17 @@
+
 import AppErr from "../errors/AppErr";
 
 import { CreateTransactionDTO } from '../dtos/transaction-dto';
 
-import { Repository } from 'typeorm';
+import { transactionRepository } from "../repositories/transaction-repository";
 
-import Transaction from '../entities/Transaction';
-
-import { AccountService } from './account-service';
+import accountService from "./account-service";
 
 export class TransactionService {
 
-    constructor(
-        private readonly transactionRepository: Repository<Transaction>,
-        private readonly accountService: AccountService
-    ){}
-
     async findOne(id: string){
 
-        return this.transactionRepository.find({
+        return transactionRepository.find({
             where:[
                 {
                     debitedAccountId: id,
@@ -33,9 +27,9 @@ export class TransactionService {
 
     async makeTransaction(debitedAccountId: string,transactionDto: CreateTransactionDTO){
 
-        const fromUserAccount = await this.accountService.findOne(debitedAccountId);
+        const fromUserAccount = await accountService.findOne(debitedAccountId);
 
-        const toUserAccount = await this.accountService.findOne(transactionDto.credited_account_id);
+        const toUserAccount = await accountService.findOne(transactionDto.credited_account_id);
 
         const transactionErr: string [] = [];
 
@@ -62,24 +56,26 @@ export class TransactionService {
 
         }
 
-        await this.accountService.partialUpdate(fromUserAccount.id, {
+        await accountService.partialUpdate(fromUserAccount.id, {
             balance: fromUserAccount.balance - transactionDto.value,
         });
 
-        await this.accountService.partialUpdate(toUserAccount.id,{
+        await accountService.partialUpdate(toUserAccount.id,{
             balance: toUserAccount.balance + transactionDto.value,
         });
 
-        const transactionInstance = this.transactionRepository.create({
+        const transactionInstance = transactionRepository.create({
             debitedAccountId:fromUserAccount.id,
             creditedAccountId:toUserAccount.id,
             value: transactionDto.value
         });
 
-        this.transactionRepository.save(transactionInstance);
+        transactionRepository.save(transactionInstance);
 
 
     }
 
 }
+
+export default new TransactionService();
 

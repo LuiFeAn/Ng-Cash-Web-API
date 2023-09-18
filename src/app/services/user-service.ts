@@ -1,21 +1,14 @@
-import { Repository } from "typeorm";
+import AppErr from "../errors/AppErr"; 
 
-import User from "../entities/User";
+import { userRepository } from "../repositories/user-repository";
 
-import AppErr from "../errors/AppErr";
-
-import { AccountService } from "./account-service";
+import accountService from "./account-service";
 
 export class UserService {
 
-    constructor(
-        private readonly userRepository: Repository<User>,
-        private readonly accountService: AccountService
-    ){}
-
     async findOne(id: string){
 
-        const user = await this.userRepository.findOneBy({
+        const user = await userRepository.findOneBy({
             id
         });
 
@@ -36,17 +29,19 @@ export class UserService {
 
     async create(username: string, password: string){
 
-        const userInstance = this.userRepository.create({
+        const userInstance = userRepository.create({
             username,
             password
         });
 
-        const user = await this.userRepository.save(userInstance);
+        const user = await userRepository.save(userInstance);
 
-        await this.accountService.create(user.id);
+        await accountService.create(user.id);
         
 
     }
     
 
 }
+
+export default new UserService();

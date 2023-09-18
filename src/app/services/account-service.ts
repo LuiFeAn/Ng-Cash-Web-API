@@ -1,16 +1,12 @@
-import { Repository } from "typeorm";
-
-import Account from "../entities/Account";
-
 import AppErr from "../errors/AppErr";
+
+import { accountRepository } from "../repositories/account-repository";
 
 export class AccountService {
 
-    constructor(private readonly accountRepository: Repository<Account>){}
-
     async create(userId: string){
 
-        await this.accountRepository.save({
+        await accountRepository.save({
             user:{
                 accountId: userId
             }
@@ -20,7 +16,7 @@ export class AccountService {
 
     async findOne(id: string){
 
-        const account = await this.accountRepository.findOneBy({
+        const account = await accountRepository.findOneBy({
             id
         });
 
@@ -41,8 +37,10 @@ export class AccountService {
 
     async partialUpdate(id: string, accountDto: any){
 
-        await this.accountRepository.update(id,accountDto);
+        await accountRepository.update(id,accountDto);
 
     }
 
 }
+
+export default new AccountService();

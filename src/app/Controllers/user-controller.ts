@@ -1,18 +1,16 @@
 import { Request, Response } from "express";
 
-import { UserService } from "../services/user-service";
-
 import { CreateUserDTO } from "../dtos/user-dto";
 
-export class UserController  {
+import userService from "../services/user-service";
 
-    constructor(private readonly userService: UserService){}
+export class UserController  {
 
     async store(request: Request<{},{},CreateUserDTO>, response: Response){
 
         const { username, password } = request.body;
 
-        await this.userService.create(username,password);
+        await userService.create(username,password);
 
         response.sendStatus(200);
 
