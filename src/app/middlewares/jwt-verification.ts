@@ -25,7 +25,7 @@ export function verifyJwt(request: Request, response: Response, next: NextFuncti
 
     }
 
-    jwt.verify(token,process.env.JWT_SECRET, (err: any, decode: TokenPayload) => {
+    jwt.verify(token,process.env.JWT_SECRET as string, (err: any, decode: any) => {
 
         if(err){
 
