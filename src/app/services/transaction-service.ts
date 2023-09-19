@@ -24,19 +24,13 @@ export class TransactionService {
 
     }
 
-    async findOne(id: string){
+    async findOne(transactionId: string){
 
-        return transactionRepository.find({
-            where:[
-                {
-                    debitedAccountId: id,
-                },
-                {
-                    creditedAccountId: id,
-                }
-            ]
-
+        const transaciton = await transactionRepository.findOneBy({
+            id: transactionId
         });
+
+        return transaciton;
 
     }
 
