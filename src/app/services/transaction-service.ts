@@ -13,16 +13,22 @@ export class TransactionService {
 
     async allTransactions(userId: string,getTransactionsDto: GetTransactionsDto){
 
+        const { date, page, quanty } = getTransactionsDto;
+
         const transactions = await transactionRepository.find({
             where:[
                 {
-                    debitedAccountId: userId
+                    debitedAccountId: userId,
                 },
                 {
-                    creditedAccountId: userId
+                    creditedAccountId: userId,
                 }
-            ]
+            ],
+            take: quanty,
+            skip: ( quanty * page) - page
         });
+
+        return transactions;
 
     }
 
