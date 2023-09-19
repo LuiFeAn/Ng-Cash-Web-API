@@ -1,6 +1,6 @@
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
-import ApiServiceError from "../errors/ApiServiceError";
+import ApiServiceError from "../errors/api-service-error";
 
 import { accountRepository } from "../repositories/account-repository";
 

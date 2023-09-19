@@ -1,5 +1,5 @@
 
-import ApiServiceError from "../errors/ApiServiceError";
+import ApiServiceError from "../errors/api-service-error";
 
 import { CreateTransactionDTO } from '../dtos/transaction-dto';
 

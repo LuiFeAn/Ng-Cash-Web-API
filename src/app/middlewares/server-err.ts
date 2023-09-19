@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import ApiServiceError from "../errors/ApiServiceError";
+import ApiServiceError from "../errors/api-service-error";
 
 function serverError(error: any, request: Request, response: Response, next: NextFunction) {
 

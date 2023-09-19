@@ -1,4 +1,4 @@
-import ApiServiceError from "../errors/ApiServiceError"; 
+import ApiServiceError from "../errors/api-service-error"; 
 
 import { userRepository } from "../repositories/user-repository";
 

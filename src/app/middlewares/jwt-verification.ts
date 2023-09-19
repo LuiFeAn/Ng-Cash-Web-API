@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 import { Request, Response, NextFunction } from 'express';
 
-import AppErr from '../errors/ApiServiceError';
+import AppErr from '../errors/api-service-error';
 
 import dotenv from 'dotenv';
 
