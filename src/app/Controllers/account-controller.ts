@@ -4,9 +4,9 @@ import accountService from "../services/account-service";
 
 class AccountController {
 
-    async show(request: Request, response: Response){
+    async show(request: Request< { id: string }>, response: Response){
 
-        const account = await accountService.findOne(request.authUser.id);
+        const account = await accountService.findOne(request.authUser.id,request.params.id);
 
         response.json(account);
 
