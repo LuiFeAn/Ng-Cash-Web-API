@@ -2,7 +2,7 @@ import { IsNotEmpty, IsString, IsUUID,  IsISO8601, IsIn } from "class-validator"
 
 import { Transform, TransformFnParams } from "class-transformer";
 
-import { toNumber } from "../utils/toNumber";
+import { toNumber } from "../utils/to-number";
 
 export class CreateTransactionDTO {
 
