@@ -12,7 +12,7 @@ import dotenv from 'dotenv';
 
 import serverError from "./app/middlewares/server-err";
 
-import routes from './app/routes';
+import { mainrRoutes } from "./app/routes/main";
 
 dotenv.config();
 
@@ -22,7 +22,7 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use(routes);
+app.use(mainrRoutes);
 
 app.use(serverError);
 
