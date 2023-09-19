@@ -14,7 +14,9 @@ export default function classValidatorResource<T extends new (...args: any[]) =>
 
         if( errors.length > 0 ){
 
-            return console.log(errors);
+            res.status(401).json(errors);
+
+            return
 
         }
 
