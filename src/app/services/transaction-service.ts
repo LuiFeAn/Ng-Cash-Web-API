@@ -13,17 +13,40 @@ export class TransactionService {
 
     async allTransactions(userId: string,getTransactionsDto: GetTransactionsDto){
 
-        const { date, page, quanty } = getTransactionsDto;
+        const { date, page, quanty, type } = getTransactionsDto;
+
+        const whereTransactions = [];
+
+        if( type === 'all' ){
+
+            whereTransactions.push({
+                debitedAccountId: userId
+            });
+
+            whereTransactions.push({
+                creditedAccountId: userId
+            });
+
+        }
+
+        if( type === 'credied' ){
+
+            whereTransactions.push({
+                creditedAccountId: userId
+            });
+
+        }
+
+        if( type === 'debited' ){
+
+            whereTransactions.push({
+                debitedAccountId: userId
+            });
+            
+        }
 
         const transactions = await transactionRepository.find({
-            where:[
-                {
-                    debitedAccountId: userId,
-                },
-                {
-                    creditedAccountId: userId,
-                }
-            ],
+            where: whereTransactions,
             take: quanty,
             skip: ( quanty * page) - page
         });
