@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 import ApiServiceError from "../errors/ApiServiceError";
 
-function serverError(error: ApiServiceError, request: Request, response: Response, next: NextFunction) {
+function serverError(error: any, request: Request, response: Response, next: NextFunction) {
 
    if( error instanceof ApiServiceError ){
 
