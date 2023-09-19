@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsUUID } from "class-validator";
+import { IsNotEmpty, IsString, IsUUID,  IsISO8601 } from "class-validator";
 
 import { Transform, TransformFnParams } from "class-transformer";
 
@@ -20,3 +20,25 @@ export class CreateTransactionDTO {
 
 }
 
+export class GetTransactionsDto {
+
+    @IsNotEmpty({
+        message:'Informe a página atual de transações'
+    })
+    @Transform( (params: TransformFnParams ) => +params.value )
+    readonly page: number
+
+    @IsNotEmpty({
+        message:'Informe a quantidade de registros que deseja obter'
+    })
+    @Transform( (params: TransformFnParams ) => +params.value )
+    readonly quanty: number
+
+    @IsISO8601(undefined,{
+        message:'Informe uma data válida'
+    })
+    date: string
+
+
+
+}
