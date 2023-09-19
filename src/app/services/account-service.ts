@@ -2,6 +2,14 @@ import AppErr from "../errors/AppErr";
 
 import { accountRepository } from "../repositories/account-repository";
 
+interface Test {
+
+    loggedUserId?: string
+    userParamId: string
+    currentUserAccount?: boolean
+
+}
+
 export class AccountService {
 
     async create(userId: string){
@@ -14,21 +22,29 @@ export class AccountService {
 
     }
 
-    async findOne(userTokenId: string,userParamId: string){
-
-        if( userTokenId != userParamId ){
+    async getCurrentUserAccount(userId: string, paramUserId: string){
+        
+        if( userId != paramUserId ){
 
             throw new AppErr({
                 statusCode:401,
                 errors:[
-                    'Acesso não autorizado. Você não pode acessar a conta de outros usuários.'
+                    'Acesso não autorizado. Você não possui permissão para acessar a conta de outros usuários.'
                 ]
             })
 
         }
 
+        const account = await this.getOne(paramUserId);
+
+        return account;
+
+    }
+
+    async getOne(userId: string){
+
         const account = await accountRepository.findOneBy({
-            id: userParamId
+            id: userId
         });
 
         if( !account ){
@@ -42,7 +58,7 @@ export class AccountService {
 
         }
 
-        return account!
+        return account
 
     }
 

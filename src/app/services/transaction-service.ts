@@ -9,6 +9,14 @@ import accountService from "./account-service";
 
 export class TransactionService {
 
+    async allTransactions(userId: string){
+
+        const transactions = await transactionRepository.findBy({
+            id: userId
+        });
+
+    }
+
     async findOne(id: string){
 
         return transactionRepository.find({
@@ -27,9 +35,9 @@ export class TransactionService {
 
     async makeTransaction(debitedAccountId: string,transactionDto: CreateTransactionDTO){
 
-        const fromUserAccount = await accountService.findOne(debitedAccountId);
+        const fromUserAccount = await accountService.getOne(debitedAccountId);
 
-        const toUserAccount = await accountService.findOne(transactionDto.credited_account_id);
+        const toUserAccount = await accountService.getOne(transactionDto.credited_account_id);
 
         const transactionErr: string [] = [];
 

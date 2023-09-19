@@ -7,6 +7,12 @@ import transactionService from "../services/transaction-service";
 
 export class TransactionController {
 
+    async index(request: Request, response: Response){
+
+        const transactions = await transactionService.allTransactions(request.authUser.id);
+
+    }
+
     async show(request: Request, response:Response){
 
         const transactions = transactionService.findOne(request.authUser.accountId);

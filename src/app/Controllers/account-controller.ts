@@ -6,7 +6,7 @@ class AccountController {
 
     async show(request: Request< { id: string }>, response: Response){
 
-        const account = await accountService.findOne(request.authUser.id,request.params.id);
+        const account = await accountService.getCurrentUserAccount(request.authUser.id,request.params.id);
 
         response.json(account);
 
