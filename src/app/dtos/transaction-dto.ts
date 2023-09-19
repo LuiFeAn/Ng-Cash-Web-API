@@ -2,6 +2,8 @@ import { IsNotEmpty, IsString, IsUUID,  IsISO8601, IsIn } from "class-validator"
 
 import { Transform, TransformFnParams } from "class-transformer";
 
+import { toNumber } from "../utils/toNumber";
+
 export class CreateTransactionDTO {
 
     @IsNotEmpty({
@@ -22,13 +24,13 @@ export class GetTransactionsDto {
     @IsNotEmpty({
         message:'Informe a página atual de transações'
     })
-    @Transform( (params: TransformFnParams ) => +params.value )
+    @Transform( (params: TransformFnParams ) => toNumber(params.value) )
     readonly page: number
 
     @IsNotEmpty({
         message:'Informe a quantidade de registros que deseja obter'
     })
-    @Transform( (params: TransformFnParams ) => +params.value )
+    @Transform( (params: TransformFnParams ) => toNumber(params.value) )
     readonly quanty: number
 
     @IsNotEmpty({
