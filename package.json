@@ -4,13 +4,13 @@
   "description": "Projeto criado para o teste técnico do processo seletivo da NG ",
   "main": "index.js",
   "scripts": {
-    "start": "node build/index.js",
+    "start": "node build/server.js",
     "dev": "nodemon -e ts,json src/server.ts",
     "generate-migration":"npm run typeorm migration:generate -- -d ./src/app/database/index.ts ./src/app/database/migrations/migration",
     "typeorm": "typeorm-ts-node-commonjs",
     "migrate": "npm run typeorm -- -d ./src/app/database/index.ts migration:run",
     "revert": "npm run typeorm migration:revert -- -d ./src/app/database/index.ts",
-    "deploy": "npm run typeorm:migrate && npm run build && npm run start",
+    "deploy": "npm run migrate && npm run start",
     "test": "jest --runInBand",
     "build": "tsc"
   },
