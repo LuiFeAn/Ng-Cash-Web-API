@@ -1,4 +1,4 @@
-import AppErr from "../errors/AppErr"; 
+import ApiServiceError from "../errors/ApiServiceError"; 
 
 import { userRepository } from "../repositories/user-repository";
 
@@ -14,7 +14,7 @@ export class UserService {
 
         if( !user ){
 
-            throw new AppErr({
+            throw new ApiServiceError({
                 statusCode:404,
                 errors:[
                     'Usuário não encontrado'

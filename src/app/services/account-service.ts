@@ -1,6 +1,6 @@
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
-import AppErr from "../errors/AppErr";
+import ApiServiceError from "../errors/ApiServiceError";
 
 import { accountRepository } from "../repositories/account-repository";
 
@@ -25,7 +25,7 @@ export class AccountService {
         
         if( userId != paramUserId ){
 
-            throw new AppErr({
+            throw new ApiServiceError({
                 statusCode:401,
                 errors:[
                     'Acesso não autorizado. Você não possui permissão para acessar a conta de outros usuários.'
@@ -50,7 +50,7 @@ export class AccountService {
 
         if( !account ){
 
-            throw new AppErr({
+            throw new ApiServiceError({
                 statusCode:401,
                 errors:[
                     'Conta não existente'

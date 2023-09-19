@@ -1,4 +1,4 @@
-interface IAppError {
+interface IApiServiceError {
 
     statusCode: number;
 
@@ -6,4 +6,4 @@ interface IAppError {
 
 }
 
-export default IAppError
+export default IApiServiceError

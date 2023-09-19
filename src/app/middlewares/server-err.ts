@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 
-import AppErr from "../errors/AppErr";
+import ApiServiceError from "../errors/ApiServiceError";
 
-function serverError(error: AppErr, request: Request, response: Response, next: NextFunction) {
+function serverError(error: ApiServiceError, request: Request, response: Response, next: NextFunction) {
 
-   if( error instanceof AppErr ){
+   if( error instanceof ApiServiceError ){
 
         const { errors } = error
 

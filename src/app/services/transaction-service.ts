@@ -1,5 +1,5 @@
 
-import AppErr from "../errors/AppErr";
+import ApiServiceError from "../errors/ApiServiceError";
 
 import { CreateTransactionDTO } from '../dtos/transaction-dto';
 
@@ -105,7 +105,7 @@ export class TransactionService {
 
         if( transactionErr.length > 0 ){
 
-            throw new AppErr({
+            throw new ApiServiceError({
                 statusCode:401,
                 errors: transactionErr
             })

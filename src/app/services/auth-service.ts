@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 import bcrypt from 'bcrypt';
 
-import AppErr from "../errors/AppErr";
+import ApiServiceError from "../errors/ApiServiceError";
 
 import { userRepository } from '../repositories/user-repository';
 
@@ -18,7 +18,7 @@ export class AuthService {
 
         if(!validPassword){
 
-            throw new AppErr({
+            throw new ApiServiceError({
                 statusCode:401,
                 errors:[
                     'Email ou senha incorreto(s)'
