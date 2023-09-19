@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+
+    db:
+        image: postgres
+        container_name: NG_CASH_DB
+        expose:
+            - 5432
+        ports:
+            - "${DB_PORT}:5432"
+        environment:
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_NAME}
+        volumes:
+            - pgsql_files:/var/lib/postgresql/data  
+
+    api:
+
+      build:
+        context: .
+        dockerfile: dockerfile
+      container_name: NG_CASH_API
+      restart: always
+      expose:
+          - ${API_PORT}
+      ports:
+          - "${API_PORT}:${API_PORT}"
+      depends_on:
+          - db
+      command: ["npm", "run", "start"]
+      environment:
+          API_PORT: ${API_PORT}
+          JWT_SECRET: ${JWT_SECRET}
+          DB_USER: ${DB_USER}
+          DB_PASSWORD: ${DB_PASSWORD}
+          DB_PORT: ${DB_PORT}
+          DB_NAME: ${DB_NAME}
+          DB_HOST: NG_CASH_DB
+      volumes:
+            - server_files:/app/volumes
+
+volumes:
+    pgsql_files:
+    server_files:
