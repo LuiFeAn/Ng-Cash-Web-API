@@ -1,6 +1,8 @@
+import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 import AppErr from "../errors/AppErr";
 
 import { accountRepository } from "../repositories/account-repository";
+import Account from "../entities/Account";
 
 interface Test {
 
@@ -62,7 +64,7 @@ export class AccountService {
 
     }
 
-    async partialUpdate(id: string, accountDto: any){
+    async partialUpdate(id: string, accountDto: QueryDeepPartialEntity<Account>){
 
         await accountRepository.update(id,accountDto);
 
