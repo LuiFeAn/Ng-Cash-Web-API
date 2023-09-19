@@ -6,9 +6,10 @@
   "scripts": {
     "start": "node build/index.js",
     "dev": "nodemon -e ts,json src/server.ts",
-    "typeorm": "npx typeorm-ts-node-commonjs",
-    "typeorm:migrate": "npm run typeorm -- -d ./src/app/database/index.ts migration:run",
-    "typeorm:revert": "npm run typeorm migration:revert -- -d ./src/app/database/index.ts",
+    "generate-migration":"npm run typeorm migration:generate -- -d ./src/app/database/index.ts ./src/app/database/migrations/migration",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migrate": "npm run typeorm -- -d ./src/app/database/index.ts migration:run",
+    "revert": "npm run typeorm migration:revert -- -d ./src/app/database/index.ts",
     "deploy": "npm run typeorm:migrate && npm run build && npm run start",
     "test": "jest --runInBand",
     "build": "tsc"
