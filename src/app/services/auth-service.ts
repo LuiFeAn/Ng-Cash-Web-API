@@ -33,7 +33,6 @@ export class AuthService {
             {
                 id: user.id,
                 username:user.username,
-                accountId: user.accountId
             },
             process.env.JWT_SECRET as string,
             {
