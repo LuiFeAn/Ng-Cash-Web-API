@@ -10,13 +10,8 @@ export class AuthService {
 
     async auth(username: string, password: string){
 
-        const user = await userRepository.findOne({
-            where:{
-                username
-            },
-            relations:{
-                account:true
-            }
+        const user = await userRepository.findOneBy({
+            username
         });
 
         const validPassword = user ? await bcrypt.compare(password, user.password) : undefined;
