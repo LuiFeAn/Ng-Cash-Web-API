@@ -1,7 +1,7 @@
 
 import { Request, Response } from "express";
 
-import { CreateTransactionDTO } from "../dtos/transaction-dto";
+import { CreateTransactionDTO, GetTransactionsDto } from "../dtos/transaction-dto";
 
 import transactionService from "../services/transaction-service";
 
@@ -9,7 +9,7 @@ export class TransactionController {
 
     async index(request: Request, response: Response){
 
-        const transactions = await transactionService.allTransactions(request.authUser.id);
+        const transactions = await transactionService.allTransactions(request.authUser.id,request.query as unknown as GetTransactionsDto);
 
     }
 

@@ -1,7 +1,11 @@
 import { Router } from "express";
 
-export const userRoutes = Router();
+import classValidatorResource from "../middlewares/class-validator-resource";
+
+import { CreateUserDTO } from "../dtos/user-dto";
 
 import userController from "../controllers/user-controller";
 
-userRoutes.post('/',userController.store);
+export const userRoutes = Router();
+
+userRoutes.post('/',classValidatorResource(CreateUserDTO,'body'),userController.store);

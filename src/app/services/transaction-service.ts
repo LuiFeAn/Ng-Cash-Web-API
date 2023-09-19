@@ -7,9 +7,11 @@ import { transactionRepository } from "../repositories/transaction-repository";
 
 import accountService from "./account-service";
 
+import { GetTransactionsDto } from "../dtos/transaction-dto";
+
 export class TransactionService {
 
-    async allTransactions(userId: string){
+    async allTransactions(userId: string,getTransactionsDto: GetTransactionsDto){
 
         const transactions = await transactionRepository.find({
             where:[

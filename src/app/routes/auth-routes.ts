@@ -1,7 +1,11 @@
 import { Router } from "express";
 
-export const authRoutes = Router();
-
 import authController from "../controllers/auth-controller";
 
-authRoutes.post('/',authController.authenticate);
+import classValidatorResource from "../middlewares/class-validator-resource";
+
+import { AuthDTO } from "../dtos/auth-dto";
+
+export const authRoutes = Router();
+
+authRoutes.post('/',classValidatorResource(AuthDTO,'body'),authController.authenticate);

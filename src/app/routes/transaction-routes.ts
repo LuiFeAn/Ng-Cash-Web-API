@@ -1,11 +1,15 @@
 import { Router } from "express";
 
-export const transactionRoutes = Router();
-
 import transactionController from "../controllers/transaction-controller";
 
 import { verifyJwt } from "../middlewares/jwt-verification";
 
-transactionRoutes.get('/',verifyJwt,transactionController.index);
+import classValidatorResource from "../middlewares/class-validator-resource";
 
-transactionRoutes.post('/',verifyJwt,transactionController.store);
+import { CreateTransactionDTO, GetTransactionsDto } from "../dtos/transaction-dto";
+
+export const transactionRoutes = Router();
+
+transactionRoutes.get('/',verifyJwt,classValidatorResource(GetTransactionsDto,'query'),transactionController.index);
+
+transactionRoutes.post('/',verifyJwt,classValidatorResource(CreateTransactionDTO,'body'),transactionController.store);
