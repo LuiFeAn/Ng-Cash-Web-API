@@ -15,6 +15,9 @@ export class CreateUserDTO {
         message:'Informe uma string'
     })
     @Transform( ( params: TransformFnParams) => params.value.trim())
+    @MinLength(3,{
+        message:'Seu nome deve possuir no mínimo 3 caracteres'
+    })
     @MaxLength(150,{
         message:'Seu nome deve possuir no máximo 150 caracteres'
     })
