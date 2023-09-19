@@ -37,6 +37,8 @@ export class UserService {
         const user = await userRepository.save(userInstance);
 
         await accountService.create(user.id);
+
+        return user
         
 
     }
