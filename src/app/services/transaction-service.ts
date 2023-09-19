@@ -67,23 +67,39 @@ export class TransactionService {
 
     async makeTransaction(debitedAccountId: string,transactionDto: CreateTransactionDTO){
 
-        const fromUserAccount = await accountService.getOne(debitedAccountId);
+        const fromUserAccount = await accountService.getOne({
+            where:{
+                user:{
+                    id: debitedAccountId
+                }
+            }
+        });
 
-        const toUserAccount = await accountService.getOne(transactionDto.credited_account_id);
+        const toUserAccount = await accountService.getOne({
+            where:{
+                user:{
+                    username: transactionDto.credited_account_nickname
+                }
+            },
+            relations:{
+                user:true,
+            }
+        });
+
 
         const transactionErr: string [] = [];
 
         const addTransactionError = ( error: string ) => transactionErr.push(error);
 
-        if( fromUserAccount.balance < transactionDto.value ){
+        if( debitedAccountId === toUserAccount.user.id ){
 
-            addTransactionError('Você não possui saldo o suficiente para efetuar essa transação');
+            addTransactionError('Você não pode realizar uma transação para si mesmo');
 
         }
 
-        if( transactionDto.credited_account_id === debitedAccountId ){
+        if( fromUserAccount.balance < transactionDto.value ){
 
-            addTransactionError('Você não pode realizar uma transação para si mesmo');
+            addTransactionError('Você não possui saldo o suficiente para efetuar essa transação');
 
         }
 
