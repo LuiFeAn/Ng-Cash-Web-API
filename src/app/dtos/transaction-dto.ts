@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsUUID,  IsISO8601 } from "class-validator";
+import { IsNotEmpty, IsString, IsUUID,  IsISO8601, IsIn } from "class-validator";
 
 import { Transform, TransformFnParams } from "class-transformer";
 
@@ -33,6 +33,17 @@ export class GetTransactionsDto {
     })
     @Transform( (params: TransformFnParams ) => +params.value )
     readonly quanty: number
+
+    @IsNotEmpty({
+        message:'Informe o tipo de transação que deseja obter'
+    })
+    @IsString({
+        message:'Informe uma string'
+    })
+    @IsIn(['all','debited','credited'],{
+        message:'Tipo de transação inválido'
+    })
+    readonly type: string
 
     @IsISO8601(undefined,{
         message:'Informe uma data válida'
