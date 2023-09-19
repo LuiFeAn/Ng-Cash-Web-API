@@ -5,13 +5,10 @@ import { Transform, TransformFnParams } from "class-transformer";
 export class CreateTransactionDTO {
 
     @IsNotEmpty({
-        message:'Informe o ID do usuário a qual a transferência será realizada é obrigatório'
-    })
-    @IsUUID(undefined,{
-        message:'Informe um UUID válido'
+        message:'Informe o nome do usuário a qual a transferência será realizada'
     })
     @Transform( (params: TransformFnParams ) => params.value.trim() )
-    readonly credited_account_id: string
+    readonly credited_account_nickname: string
     
     @IsNotEmpty({
         message:'Informe o valor da transação a ser feita'
