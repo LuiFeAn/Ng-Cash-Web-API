@@ -13,11 +13,8 @@ class User {
     @Column('varchar',{ length:'150' })
     username: string;
 
-    @Column('varchar',{ length:'36' })
+    @Column('varchar',{ length:'150' })
     password: string;
-
-    @Column('uuid')
-    accountId: string;
 
     @OneToOne( () => Account, account => account.user )
     account: Account
