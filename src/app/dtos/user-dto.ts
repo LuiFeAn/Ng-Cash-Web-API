@@ -4,6 +4,8 @@ import { HasUpperCase } from '../validators/has-upper-';
 
 import { HasNumber } from '../validators/has-number';
 
+import { transformUsername } from '../utils/transform-username';
+
 import { Transform, TransformFnParams } from 'class-transformer'
 
 export class CreateUserDTO {
@@ -21,6 +23,7 @@ export class CreateUserDTO {
     @MaxLength(150,{
         message:'Seu nome deve possuir no máximo 150 caracteres'
     })
+    @Transform( (params: TransformFnParams) => transformUsername(params.value) )
     readonly username: string
 
     @IsNotEmpty({
