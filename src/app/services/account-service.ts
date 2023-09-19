@@ -35,7 +35,7 @@ export class AccountService {
 
         }
 
-        const account = await this.getOne(paramUserId);
+        const account = await this.getOne(userId);
 
         return account;
 
