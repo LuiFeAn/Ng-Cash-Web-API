@@ -9,13 +9,34 @@ import accountService from "./account-service";
 
 export class TransactionService {
 
-    async findOne(transactionId: string){
+    async allTransactions(userId: string){
 
-        const transaciton = await transactionRepository.findOneBy({
-            id: transactionId
+        const transactions = await transactionRepository.find({
+            where:[
+                {
+                    debitedAccountId: userId
+                },
+                {
+                    creditedAccountId: userId
+                }
+            ]
         });
 
-        return transaciton;
+    }
+
+    async findOne(id: string){
+
+        return transactionRepository.find({
+            where:[
+                {
+                    debitedAccountId: id,
+                },
+                {
+                    creditedAccountId: id,
+                }
+            ]
+
+        });
 
     }
 
