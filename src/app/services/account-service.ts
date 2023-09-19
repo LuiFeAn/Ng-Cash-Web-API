@@ -1,16 +1,13 @@
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
+
 import AppErr from "../errors/AppErr";
 
 import { accountRepository } from "../repositories/account-repository";
+
 import Account from "../entities/Account";
 
-interface Test {
+import { FindOneOptions, FindOptionsWhere } from "typeorm";
 
-    loggedUserId?: string
-    userParamId: string
-    currentUserAccount?: boolean
-
-}
 
 export class AccountService {
 
@@ -18,7 +15,7 @@ export class AccountService {
 
         await accountRepository.save({
             user:{
-                accountId: userId
+                id: userId
             }
         })
 
@@ -37,17 +34,19 @@ export class AccountService {
 
         }
 
-        const account = await this.getOne(userId);
+        const account = await this.getOne({
+            where:{
+                id: userId
+            }
+        });
 
         return account;
 
     }
 
-    async getOne(userId: string){
+    async getOne(params: FindOneOptions<Account>){
 
-        const account = await accountRepository.findOneBy({
-            id: userId
-        });
+        const account = await accountRepository.findOne(params);
 
         if( !account ){
 
