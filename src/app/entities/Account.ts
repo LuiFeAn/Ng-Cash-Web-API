@@ -10,14 +10,14 @@ class Account {
     @PrimaryGeneratedColumn('uuid')
     id:string;
 
+    @OneToOne( () => User, user => user.account )
+    @JoinColumn()
+    user: User
+
     @Column('float',{
         default:100.000
     })
     balance:number;
-
-    @OneToOne( () => User, user => user.account )
-    @JoinColumn()
-    user: User
 
     @OneToMany( () => Transaction, transaction => transaction.account )
     @JoinColumn()
