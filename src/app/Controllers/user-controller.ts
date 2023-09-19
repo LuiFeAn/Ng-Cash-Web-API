@@ -10,9 +10,9 @@ export class UserController  {
 
         const { username, password } = request.body;
 
-        await userService.create(username,password);
+        const createdUser = await userService.create(username,password);
 
-        response.sendStatus(200);
+        response.json(createdUser);
 
     }
 
